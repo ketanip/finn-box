@@ -30,7 +30,7 @@ const sidebar_items = [
   // },
   {
     title: "Settings",
-    url: "#",
+    url: "/dashboard/settings",
     icon: <FcSettings />,
   },
 ];
