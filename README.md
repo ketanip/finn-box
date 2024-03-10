@@ -12,6 +12,8 @@ Finn-Box is your go-to personal finance manager, designed to simplify and stream
 
 ![Transaction History](./assets/transaction-history.png)
 
+![Settings](./assets/settings.png)
+
 ![Add new record](./assets/create-new-record.png)
 
 ![Auth](./assets/auth.png)
