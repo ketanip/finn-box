@@ -50,6 +50,27 @@ const AddNewTransaction = () => {
             </select>
           </div>
 
+
+          <div className="flex flex-col gap-1">
+            <span>Transaction Method*</span>
+            <select
+              required
+              name="transaction_method"
+              id="transaction_method"
+              className="select select-bordered "
+            >
+              <option value="upi_lite" defaultChecked>
+                UPI Lite
+              </option>
+              <option value="UPI">UPI</option>
+              <option value="Cash">Cash</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+              <option value="Debit Card">Debit Card</option>
+              <option value="Credit Card">Credit Card</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
           <div className="flex flex-col gap-1">
             <span>Category*</span>
             <select

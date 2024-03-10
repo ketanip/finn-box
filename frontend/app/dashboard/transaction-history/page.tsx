@@ -8,6 +8,7 @@ const data = [
     source_destination: "Salary",
     category: "Income",
     amount: 3000.0,
+    transaction_method: "Bank Transfer",
   },
   {
     id: 2,
@@ -15,6 +16,7 @@ const data = [
     source_destination: "Grocery Store",
     category: "Food",
     amount: 150.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ const data = [
     source_destination: "Amazon",
     category: "Shopping",
     amount: 200.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 4,
@@ -29,6 +32,7 @@ const data = [
     source_destination: "Gas Station",
     category: "Transportation",
     amount: 40.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 5,
@@ -36,6 +40,7 @@ const data = [
     source_destination: "Restaurant",
     category: "Food",
     amount: 80.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 6,
@@ -43,6 +48,7 @@ const data = [
     source_destination: "Utility Company",
     category: "Bills",
     amount: 120.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 7,
@@ -50,6 +56,7 @@ const data = [
     source_destination: "Clothing Store",
     category: "Shopping",
     amount: 100.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 8,
@@ -57,6 +64,7 @@ const data = [
     source_destination: "Netflix",
     category: "Entertainment",
     amount: 15.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 9,
@@ -64,6 +72,7 @@ const data = [
     source_destination: "Gas Station",
     category: "Transportation",
     amount: 35.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 10,
@@ -71,6 +80,7 @@ const data = [
     source_destination: "Bank",
     category: "Savings",
     amount: 500.0,
+    transaction_method: "UPI",
   },
   {
     id: 11,
@@ -78,6 +88,7 @@ const data = [
     source_destination: "Coffee Shop",
     category: "Food",
     amount: 10.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 12,
@@ -85,6 +96,7 @@ const data = [
     source_destination: "Online Store",
     category: "Shopping",
     amount: 75.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 13,
@@ -92,6 +104,7 @@ const data = [
     source_destination: "Gas Station",
     category: "Transportation",
     amount: 45.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 14,
@@ -99,6 +112,7 @@ const data = [
     source_destination: "Phone Company",
     category: "Bills",
     amount: 80.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 15,
@@ -106,6 +120,7 @@ const data = [
     source_destination: "Restaurant",
     category: "Food",
     amount: 70.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 16,
@@ -113,6 +128,7 @@ const data = [
     source_destination: "Bookstore",
     category: "Entertainment",
     amount: 25.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 17,
@@ -120,6 +136,7 @@ const data = [
     source_destination: "Gas Station",
     category: "Transportation",
     amount: 30.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 18,
@@ -127,6 +144,7 @@ const data = [
     source_destination: "Utilities",
     category: "Bills",
     amount: 150.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 19,
@@ -134,6 +152,7 @@ const data = [
     source_destination: "Electronics Store",
     category: "Shopping",
     amount: 300.0,
+    transaction_method: "UPI Lite",
   },
   {
     id: 20,
@@ -141,6 +160,7 @@ const data = [
     source_destination: "Movie Theater",
     category: "Entertainment",
     amount: 40.0,
+    transaction_method: "UPI Lite",
   },
 ];
 
@@ -160,6 +180,7 @@ const TransactionHistory = () => {
               <th>DATE</th>
               <th>SOURCE / DESTINATION</th>
               <th>CATEGORY</th>
+              <th>METHOD</th>
               <th>AMOUNT</th>
             </tr>
           </thead>
@@ -175,6 +196,7 @@ const TransactionHistory = () => {
                 </td>
                 <td>{item.source_destination}</td>
                 <td>{item.category}</td>
+                <td>{item.transaction_method}</td>
                 {item.category == "Income" ? (
                   <td className="font-semibold text-green-500">
                     ${item.amount}
