@@ -1,0 +1,37 @@
+{
+  "name": "finn-box-backend",
+  "version": "1.0.0",
+  "description": "Backend for finn box.",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "nodemon ./src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ketanip/finn-box.git"
+  },
+  "author": "Ketan Iralepatil",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ketanip/finn-box/issues"
+  },
+  "homepage": "https://github.com/ketanip/finn-box#readme",
+  "dependencies": {
+    "@prisma/client": "^5.10.2",
+    "argon2": "^0.40.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "zod": "^3.22.4",
+    "zod-validation-error": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/morgan": "^1.9.9",
+    "prisma": "^5.10.2",
+    "tsconfig-paths": "^4.2.0"
+  }
+}
