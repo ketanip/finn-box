@@ -7,7 +7,7 @@ import { FcSettings } from "react-icons/fc";
 const sidebar_items = [
   {
     title: "New Transaction",
-    url: "/dashboard/add-new-transaction",
+    url: "/dashboard/add-new",
     icon: <FcSurvey />,
   },
   {
@@ -17,17 +17,9 @@ const sidebar_items = [
   },
   {
     title: "Transaction History",
-    url: "/dashboard/transaction-history",
+    url: "/dashboard/history",
     icon: <FcViewDetails />,
   },
-  // {
-  //   title: "Expenses",
-  //   url: "#",
-  // },
-  // {
-  //   title: "Incomes",
-  //   url: "#",
-  // },
   {
     title: "Settings",
     url: "/dashboard/settings",

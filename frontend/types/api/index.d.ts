@@ -42,15 +42,15 @@ export interface Transaction {
 
 export interface TransactionStat {
     _sum: {
-      amount: number;
+        amount: number;
     };
     transaction_type: "INCOME" | "EXPENSE";
-  }
-  
-  export interface Totals {
+}
+
+export interface Totals {
     total_income: number;
     total_expense: number;
-  };
+};
 
 export interface GetDashboardDetails {
     message: string;
@@ -69,17 +69,35 @@ export interface GetAllTransactions {
 }
 
 
+export interface GetTransactionData {
+    message: string;
+    data: { transaction: Transaction };
+}
 
-interface CategoryData {
+export interface DeleteTransaction {
+    message: string;
+    data: {};
+}
+
+export interface CreateTransaction {
+    "transaction_type": "EXPENSE" | "INCOME";
+    "source_destination": string;
+    "category": string;
+    "transaction_method": string;
+    "amount": number,
+    "notes": string;
+}
+
+export interface CategoryData {
     labels: string[];
     data: number[];
-  }
-  
-  interface TransactionsChartData {
+}
+
+export interface TransactionsChartData {
     labels: string[];
     datasets: { income: number[]; expense: number[] };
-  }
-  interface TransactionMethodsData {
+}
+export interface TransactionMethodsData {
     labels: string[];
     data: number[];
-  }
+}

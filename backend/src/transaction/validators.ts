@@ -23,8 +23,8 @@ const createTransaction = z.object({
     amount: z.number().min(1),
     source_destination: z.string().min(1),
     transaction_type: z.enum(["EXPENSE", "INCOME"]),
-    transaction_method: z.string(),
-    category: z.string(),
+    transaction_method: z.string().min(3),
+    category: z.string().min(3),
     notes: z.string().optional(),
 });
 

@@ -1,7 +1,47 @@
-import React from "react";
+"use client";
+import { transactions } from "@/api";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 import { FcSurvey } from "react-icons/fc";
+import React, { FormEvent, useState } from "react";
 
 const AddNewTransaction = () => {
+
+  // State.
+  const [amount, setAmount] = useState<number>(0);
+  const [sourceDest, setSourceDest] = useState("");
+  const [transactionType, setTransactionType] = useState<"INCOME" | "EXPENSE">(
+    "EXPENSE"
+  );
+  const [transactionMethod, setTransactionMethod] = useState<string>("UPI Lite");
+  const [category, setCategory] = useState("Basic Necessities");
+  const [notes, setNotes] = useState("");
+
+  // Router.
+  const router = useRouter();
+
+  // Form submissions.
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    const payload = {
+      amount: amount,
+      category,
+      notes,
+      source_destination: sourceDest,
+      transaction_method: transactionMethod,
+      transaction_type: transactionType,
+    };
+
+    try {
+      const resp = await transactions.createTransaction(payload);
+      toast(resp?.message);
+      // router.push(`/dashboard/transaction/${resp?.data.transaction.id}`);
+    } catch (error: any) {
+      toast(error.message);
+    }
+  };
+
   return (
     <div>
       <div className="mb-4">
@@ -10,7 +50,10 @@ const AddNewTransaction = () => {
           Add New Transaction
         </h2>
 
-        <form className="max-w-xl my-4 flex flex-col gap-4">
+        <form
+          className="max-w-xl my-4 flex flex-col gap-4"
+          onSubmit={handleSubmit}
+        >
           <div className="flex flex-col gap-1">
             <span>Amount*</span>
             <input
@@ -18,8 +61,9 @@ const AddNewTransaction = () => {
               type="number"
               name="amount"
               id="amount"
-              min={0.1}
+              min={1}
               className="input input-bordered "
+              onChange={(e) => setAmount(Number(e.target.value))}
             />
           </div>
 
@@ -32,6 +76,7 @@ const AddNewTransaction = () => {
               id="source_destination"
               min={0.1}
               className="input input-bordered "
+              onChange={(e) => setSourceDest(e.target.value)}
             />
           </div>
 
@@ -42,14 +87,15 @@ const AddNewTransaction = () => {
               name="transaction_type"
               id="transaction_type"
               className="select select-bordered "
+              value="EXPENSE"
+              onChange={(e: any) => setTransactionType(e.target.value)}
             >
-              <option value="expense" defaultChecked>
+              <option value="EXPENSE" >
                 Expense
               </option>
-              <option value="income">Income</option>
+              <option value="INCOME">Income</option>
             </select>
           </div>
-
 
           <div className="flex flex-col gap-1">
             <span>Transaction Method*</span>
@@ -58,8 +104,10 @@ const AddNewTransaction = () => {
               name="transaction_method"
               id="transaction_method"
               className="select select-bordered "
+              value={transactionMethod}
+              onChange={(e) => setTransactionMethod(e.target.value)}
             >
-              <option value="upi_lite" defaultChecked>
+              <option value="UPI Lite" >
                 UPI Lite
               </option>
               <option value="UPI">UPI</option>
@@ -78,6 +126,8 @@ const AddNewTransaction = () => {
               name="category"
               id="category"
               className="select select-bordered "
+              defaultValue={category}
+              onChange={(e) => setCategory(e.target.value)}
             >
               <option value="Basic Necessities">Food</option>
               <option value="Utilities"> Utilities</option>
@@ -110,10 +160,13 @@ const AddNewTransaction = () => {
               id="notes"
               rows={2}
               className="textarea textarea-bordered"
+              onChange={(e) => setNotes(e.target.value)}
             ></textarea>
           </div>
 
-          <button className="btn btn-success text-white">Add New Entry</button>
+          <button className="btn btn-success text-white" type="submit">
+            Add New Entry
+          </button>
         </form>
       </div>
     </div>
