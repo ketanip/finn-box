@@ -16,7 +16,7 @@ const DashboardData = async (req: Request, res: Response) => {
 
         // Transaction history aggregate by day for main chart.
         const transaction_history_aggregate = await db.transactions.groupBy({
-            by: ['transaction_method','transaction_date'],
+            by: ['transaction_type','transaction_date'],
             _sum: {
                 amount: true,
             },
@@ -32,7 +32,7 @@ const DashboardData = async (req: Request, res: Response) => {
         // Category wise distribution for pie chart.
         const category_wise_distribution = await db.transactions.groupBy({
             by: ['category'],
-            _count: {
+            _sum: {
                 amount: true,
             },
             orderBy: {
@@ -47,7 +47,7 @@ const DashboardData = async (req: Request, res: Response) => {
         // Transaction method for pie chart.
         const transaction_methods_distribution = await db.transactions.groupBy({
             by: ['transaction_method'],
-            _count: {
+            _sum: {
                 amount: true,
             },
             orderBy: {
@@ -71,12 +71,26 @@ const DashboardData = async (req: Request, res: Response) => {
             take: 10,
         });
 
+        // Transaction Stats.
+        const transaction_stats = await db.transactions.groupBy({
+            by: ['transaction_type'],
+            _sum: {
+                amount: true,
+            },
+            where: {
+                created_at: { gte: data.start_date, lte: data.end_date },
+                user_id: user.id,
+            }
+        });
+        
+
         res.status(200).json({
             message: "", data: {
                 transaction_history_aggregate,
                 category_wise_distribution,
                 transaction_methods_distribution,
                 latest_transactions,
+                transaction_stats,
             }
         });
         return;

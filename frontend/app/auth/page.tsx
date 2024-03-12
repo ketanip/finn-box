@@ -1,28 +1,37 @@
 "use client";
+import { auth } from "@/api";
+import { jwt_utils } from "@/utils";
+import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
-import { toast } from "react-toastify";
 
 const AuthPage = () => {
-
   const router = useRouter();
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     if (isLogin) {
-      // const message = api.auth.login(email, password);
-      const message = "Logged in successfully.";
-      toast(message);
-      router.push("/dashboard");
+      try {
+        const resp = await auth.signIn({ email, password });
+        jwt_utils.setJWTToken(resp.data.token);
+        jwt_utils.setUser(resp.data.user);
+        toast(resp.message);
+        router.push("/dashboard");
+      } catch (err: any) {
+        toast(err.message);
+      }
     } else {
-      // const message = api.auth.signup(name, email, password);
-      const message = "Signed up successfully, please login.";
-      toast(message);
+      try {
+        const resp = await auth.signUp({ name, email, password });
+        toast(resp.message);
+      } catch (err: any) {
+        toast(err.message);
+      }
     }
   };
 
