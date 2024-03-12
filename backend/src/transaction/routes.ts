@@ -12,10 +12,10 @@ router.use(middlewares.authenticate);
 router.get("/", controllers.AllTransaction);
 router.get("/dashboard-data", controllers.DashboardData);
 
-router.get("/:id");
-router.post("/:id");
-router.put("/:id");
-router.delete("/:id");
+router.get("/:id", controllers.getTransaction);
+router.post("/", controllers.createTransaction);
+router.put("/:id", controllers.updateTransaction);
+router.delete("/:id", controllers.deleteTransaction);
 
 // Exporting data.
 export default router;

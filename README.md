@@ -35,7 +35,7 @@ Finn-Box is your go-to personal finance manager, designed to simplify and stream
 1. Node.js
 2. Express.js
 3. PrismaORM
-4. PostgrSQL
+4. PostgreSQL
 
 ### License:
 This project is licensed under the MIT License, giving you the freedom to use and modify it as you see fit. 📜🔒
