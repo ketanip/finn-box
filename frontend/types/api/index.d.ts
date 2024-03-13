@@ -28,7 +28,7 @@ export interface TransactionMethodsDistribution {
 
 export interface Transaction {
     id: number;
-    transaction_type: "INCOME" | "EXPENSE";
+    transaction_type: string;
     source_destination: string;
     category: string;
     transaction_method: string;
@@ -80,7 +80,7 @@ export interface DeleteTransaction {
 }
 
 export interface CreateTransaction {
-    "transaction_type": "EXPENSE" | "INCOME";
+    "transaction_type": string;
     "source_destination": string;
     "category": string;
     "transaction_method": string;

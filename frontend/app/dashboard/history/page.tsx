@@ -1,8 +1,9 @@
 "use client";
 import { transactions } from "@/api";
 import { Transaction } from "@/types";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { FcViewDetails } from "react-icons/fc";
+import { FcNext, FcViewDetails } from "react-icons/fc";
 import { toast } from "react-toastify";
 
 const TransactionHistory = () => {
@@ -60,6 +61,11 @@ const TransactionHistory = () => {
                     -${item.amount}
                   </td>
                 )}
+                <td>
+                  <Link href={`/dashboard/transaction/${item.id}`} className="flex  gap-1 items-center btn btn-xs btn-neutral ">
+                  <span>Manage</span>
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>
