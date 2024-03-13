@@ -1,4 +1,4 @@
-import db from "@/db";
+import { db } from "@/db";
 import argon2 from "argon2";
 import CONFIG from "@/config";
 import jwt from "jsonwebtoken";
@@ -33,7 +33,7 @@ const SignUp = async (req: Request, res: Response) => {
     } catch (error) {
 
         if (error instanceof z.ZodError) {
-            res.status(422).json({message: fromZodError(error).toString(), data: {}});
+            res.status(422).json({ message: fromZodError(error).toString(), data: {} });
             return;
         }
 
@@ -68,7 +68,6 @@ const SignIn = async (req: Request, res: Response) => {
             id: user.id,
             name: user.name,
             email: user.email,
-            email_verified: user.email_verified,
         };
 
         const jwt_token = jwt.sign({ user: jwt_payload }, CONFIG.AUTH.JWT.JWT_SECRET, {
@@ -80,10 +79,10 @@ const SignIn = async (req: Request, res: Response) => {
         res.status(200).json({ message: "Logged in successfully.", data: { token: jwt_token, user: jwt_payload } });
         return;
 
-  } catch (error) {
+    } catch (error) {
 
         if (error instanceof z.ZodError) {
-            res.status(422).json({message: fromZodError(error).toString(), data: {}});
+            res.status(422).json({ message: fromZodError(error).toString(), data: {} });
             return;
         }
 
@@ -93,7 +92,61 @@ const SignIn = async (req: Request, res: Response) => {
 
 };
 
+const updateProfile = async (req: Request, res: Response) => {
+    try {
+
+
+        // Getting data and user.
+        const data = await validators.updateProfile.parseAsync(req.body);
+        const user = res.locals.user;
+
+        // Validating password.
+        if (data.password) {
+            data.password = await argon2.hash(data.password);
+        }
+
+        const existing_user = await db.users.findUnique({where: {email: data.email}});
+        if (existing_user && user.id != existing_user.id) {
+            res.status(402).json({ message: "Email already in use.", data: {} });
+            return;
+        }
+
+        const updated_user = await db.users.update({
+            where: { id: user.id },
+            data,
+        });
+
+        // Reissuing JWT token and then sending it.
+        const jwt_payload = {
+            id: updated_user.id,
+            name: updated_user.name,
+            email: updated_user.email,
+        };
+
+        const jwt_token = jwt.sign({ user: jwt_payload }, CONFIG.AUTH.JWT.JWT_SECRET, {
+            algorithm: "HS256",
+            audience: CONFIG.AUTH.JWT.JWT_AUDIENCE,
+            expiresIn: CONFIG.AUTH.JWT.JWT_EXPIRES_IN,
+        });
+
+        res.status(200).json({ message: "User updated successfully.", data: { token: jwt_token, user: jwt_payload } });
+        return;
+
+
+    } catch (error) {
+
+        if (error instanceof z.ZodError) {
+            res.status(422).json({ message: fromZodError(error).toString(), data: {} });
+            return;
+        }
+
+        res.status(500).json({ message: "Internal server error.", data: {} });
+        return;
+    };
+}
+
 export default {
     SignUp,
     SignIn,
+    updateProfile,
 };

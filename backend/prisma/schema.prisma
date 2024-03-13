@@ -22,7 +22,6 @@ model users {
   id             String         @id @default(uuid())
   name           String
   email          String         @unique
-  email_verified Boolean        @default(false)
   password       String
   transcactions  transactions[]
 }

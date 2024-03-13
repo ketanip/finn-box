@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { BASE_URL } from "./config";
-
+import { BASE_URL, getAuthHeader } from "./config";
 
 interface SignUpData {
     name: string;
@@ -51,7 +50,30 @@ const signIn = async (data: SignInData) => {
 
 }
 
+const updateUser = async (data: Partial<SignUpData>) => {
+
+    const request_config: AxiosRequestConfig = {
+        url: `${BASE_URL}/auth/update-profile`,
+        method: "PUT",
+        data: data,
+        headers: {
+            Authorization: getAuthHeader(),
+        }
+    };
+
+    try {
+        const response = await axios(request_config);
+        return response.data;
+    } catch (error: any) {
+        if (error.response) {
+            throw error.response.data;
+        }
+    };
+
+}
+
 export {
     signUp,
     signIn,
+    updateUser,
 }

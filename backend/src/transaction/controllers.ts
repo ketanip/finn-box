@@ -1,4 +1,4 @@
-import db from "@/db";
+import { db } from "@/db";
 import validators from "./validators";
 import { Request, Response } from "express";
 import { z } from "zod";
@@ -198,7 +198,7 @@ const createTransaction = async (req: Request, res: Response) => {
             },
         });
 
-        res.json({ message: "Transaction recorded successfully.", data: {transaction} });
+        res.json({ message: "Transaction recorded successfully.", data: { transaction } });
         return;
 
     } catch (error) {

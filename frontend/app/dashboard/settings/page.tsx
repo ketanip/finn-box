@@ -1,25 +1,35 @@
 "use client";
+import { auth } from "@/api";
+import { jwt_utils } from "@/utils";
+import { getUser } from "@/utils/jwt";
 import router from "next/router";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { FcSettings } from "react-icons/fc";
 import { toast } from "react-toastify";
 
 const SettingsPage = () => {
-  const [name, setName] = useState("Jhon Doe");
-  const [email, setEmail] = useState("jhondoe@example.com");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState<string | undefined>();
 
-  const onSubmit = (e: FormEvent) => {
-    
+  useEffect(() => {
+    const user = getUser();
+    setName(user.name);
+    setEmail(user.email);
+  }, []);
+
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
-    // user = useUser();
-    // const data: any = {name,email}
-    // if (password) data.password= password;
-    // api.user.update(user.id, data);
 
-    const message = "Profile updated successfully.";
-    toast(message);
+    try {
+      const resp = await auth.updateUser({ name, email, password });
+      console.log(resp)
+      jwt_utils.setJWTToken(resp.data.token);
+      jwt_utils.setUser(resp.data.user);
+      toast(resp.message);
+    } catch (err: any) {
+      toast(err.message);
+    }
   };
 
   return (
@@ -42,7 +52,6 @@ const SettingsPage = () => {
               id="name"
               className="input input-bordered w-full "
               onChange={(e) => setName(e.target.value)}
-              
               defaultValue={name}
             />
           </div>
@@ -55,7 +64,6 @@ const SettingsPage = () => {
               id="email"
               className="input input-bordered w-full "
               onChange={(e) => setEmail(e.target.value)}
-              
               defaultValue={email}
             />
           </div>
@@ -67,7 +75,6 @@ const SettingsPage = () => {
               id="password"
               className="input input-bordered w-full "
               onChange={(e) => setPassword(e.target.value)}
-              
             />
           </div>
           <button type="submit" className="btn btn-neutral">
